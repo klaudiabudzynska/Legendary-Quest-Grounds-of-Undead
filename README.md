@@ -34,4 +34,6 @@
 * przechodzimy do katalogu server
 * wpisujemy polecenie ```composer install```
 * **Jeśli skonfigurowaliśmy bazę danych** używamy polecenia ```bin/console do:mi:mi -n```
-
+* Aby przetestować czy backend działa
+  * wpsiujemy symfony server:start
+  * w przeglądarce wpisujemy adres podany w terminalu z dopiskiem ```/test/```

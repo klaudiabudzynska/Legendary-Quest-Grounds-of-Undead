@@ -19,7 +19,8 @@
 * uruchomić bazę danych
   * linux - ```sudo systemctl enable postgresql.service``` i ```sudo systemctl start postgresql.service```
 * zalogować się jako postgres ```sudo su postgres```
-* tworzymy nowego użytkownika bazy danych ```createuser --interactive --pwprompt``` legend/legend z uprawnieniami superusera *optymalny użytkownik - nie trzeba później konfigurować plików konfiguracyjnych*
+* tworzymy nowego użytkownika bazy danych ```createuser --interactive --pwprompt```
+  * User:legend/legend z uprawnieniami superusera *optymalny użytkownik - nie trzeba później konfigurować plików konfiguracyjnych*
 * uruchamiamy polecenie ```psql```
 * Tworzymy nową bazę danych ```CREATE DATABASE legend;``` *Optymalna baza danych - nie trzeba później nic konfigurować* 
 * To wszystko

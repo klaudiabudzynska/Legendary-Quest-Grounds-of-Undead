@@ -1,0 +1,23 @@
+{
+  "name": "legendary-quest",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "serve ./client",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Klaudix/Legendary-Quest-Grounds-of-Undead.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Klaudix/Legendary-Quest-Grounds-of-Undead/issues"
+  },
+  "homepage": "https://github.com/Klaudix/Legendary-Quest-Grounds-of-Undead#readme",
+  "dependencies": {
+    "serve": "^11.2.0"
+  }
+}

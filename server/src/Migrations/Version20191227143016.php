@@ -87,6 +87,14 @@ final class Version20191227143016 extends AbstractMigration
     public function down(Schema $schema) : void
     {
         // this down() migration is auto-generated, please modify it to your needs
-
+        $this->abortIf($this->connection->getDatabasePlatform()->getName() !== 'postgresql', 'Migration can only be executed safely on \'postgresql\'.');
+        $this->addSql("DROP TABLE actions;");
+        $this->addSql("DROP TABLE inventory;");
+        $this->addSql("DROP TABLE game_elements;");
+        $this->addSql("DROP TABLE board;");
+        $this->addSql("DROP TABLE items;");
+        $this->addSql("DROP TABLE class;");
+        $this->addSql("DROP TABLE mobs;");
+        $this->addSql("DROP TABLE users;");
     }
 }

@@ -31,18 +31,18 @@ final class Version20191228085202 extends AbstractMigration
                         ");
         $this->addSql('ALTER TABLE game_elements ADD COLUMN height INTEGER DEFAULT 1 NOT NULL, ADD COLUMN width INTEGER DEFAULT 1, ADD COLUMN type INTEGER DEFAULT 1;');
         $this->addSql("INSERT INTO game_elements (id, name, description, weight, can_move, height, width, type) VALUES 
-                            (nextval('game_elements_id_seq'), 'Kościół', 'Kościół', 1, false, 3, 6, 2),
-                            (nextval('game_elements_id_seq'), 'Płot', 'Płot', 0, false, 1, 3, 1),
-                            (nextval('game_elements_id_seq'), 'Słupek', 'Słupek', 0, false, 1, 1, 1),
-                            (nextval('game_elements_id_seq'), 'Bagno', 'Bagno', 3, true, 1, 1, 0),
-                            (nextval('game_elements_id_seq'), 'Ścieżka', 'Ścieżka', 1, true, 1, 1, 0),
-                            (nextval('game_elements_id_seq'), 'Nagrobek', 'Nagrobek', 0, false, 1, 1, 1),
-                            (nextval('game_elements_id_seq'), 'Drzewo', 'Drzewo', 0, false, 1, 1, 1),
-                            (nextval('game_elements_id_seq'), 'Pochodnia', 'Pochodnia', 0, false, 1, 1, 1),                                                                                         
-                            (nextval('game_elements_id_seq'), 'Krzak', 'Krzak', 0, false, 2, 2, 1),                                                                                         
-                            (nextval('game_elements_id_seq'), 'Skrzynia1', 'Skrzynia 1', 0, false, 1, 2, 1),                                                                                         
-                            (nextval('game_elements_id_seq'), 'Skrzynia2', 'Skrzynia 2', 0, false, 1, 2, 1),                                                                                         
-                            (nextval('game_elements_id_seq'), 'Kamień', 'Kamień', 2, true, 1, 1, 1);                                                                                                    
+                            (nextval('game_elements_id_seq'), 'Church', 'Church', 1, false, 3, 6, 2),
+                            (nextval('game_elements_id_seq'), 'Fence', 'Fence', 0, false, 1, 3, -2),
+                            (nextval('game_elements_id_seq'), 'Pole', 'Pole', 0, false, 1, 1, -1),
+                            (nextval('game_elements_id_seq'), 'Swamp', 'Swamp', 3, true, 1, 1, 0),
+                            (nextval('game_elements_id_seq'), 'Path', 'Path', 1, true, 1, 1, 0),
+                            (nextval('game_elements_id_seq'), 'Tombstone', 'Tombstone', 0, false, 1, 1, 1),
+                            (nextval('game_elements_id_seq'), 'Tree', 'Tree', 0, false, 1, 1, 1),
+                            (nextval('game_elements_id_seq'), 'Torch', 'Torch', 0, false, 1, 1, 1),                                                                                         
+                            (nextval('game_elements_id_seq'), 'Bush', 'Bush', 0, false, 2, 2, 1),                                                                                         
+                            (nextval('game_elements_id_seq'), 'Chest1', 'Chest1', 0, false, 1, 2, 1),                                                                                         
+                            (nextval('game_elements_id_seq'), 'Chest2', 'Chest 2', 0, false, 1, 2, 1),                                                                                         
+                            (nextval('game_elements_id_seq'), 'Stone', 'Stone', 2, true, 1, 1, 1);                                                                                                    
                             ");
     }
 

@@ -1,6 +1,8 @@
-import { loadBackground, loadCharacter } from './spriteSheet.js';
+import { loadBackground } from './spriteSheet.js';
 import { createBackgroundLayer, createCharacterLayer } from './layers.js';
 import Scene from './Scene.js';
+import Timer from './Timer.js';
+import { createHuman } from './characters.js';
 
 const canvas = document.getElementById('canvas');
 const ctx = canvas.getContext('2d');
@@ -8,32 +10,29 @@ ctx.scale(3,3);
 
 Promise.all([
   loadBackground(), 
-  loadCharacter(),
+  createHuman(),
 ])
 .then(([
   background, 
-  character,
+  human, 
 ]) => {
   const scene = new Scene();
 
   const backgroundLayer = createBackgroundLayer(background);
   scene.layers.push(backgroundLayer);
 
-  const pos = {
-    x: 1,
-    y: 0,
-  };
+  human.pos.set(1, 0);
+  human.vel.set(1, 0);
 
-  const characterLayer = createCharacterLayer(character, pos);
+  const characterLayer = createCharacterLayer(human);
   scene.layers.push(characterLayer);
 
-  function update(){
+  const timer = new Timer();
+  timer.update = function update(deltaTime){
     scene.draw(ctx);
-    pos.x += 0.1;
-    //pos.y += 0.1;
-    requestAnimationFrame(update);
+    human.update(deltaTime);
   }
 
-  update();
+  timer.start();
 
 })

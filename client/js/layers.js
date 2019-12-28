@@ -12,8 +12,8 @@ export function createBackgroundLayer(background) {
   }
 }
 
-export function createCharacterLayer(character, pos) {
+export function createCharacterLayer(character) {
   return function drawLayer(ctx){
-    character.draw('idle', ctx, pos.x, pos.y);
+    character.draw(ctx);
   }
 }

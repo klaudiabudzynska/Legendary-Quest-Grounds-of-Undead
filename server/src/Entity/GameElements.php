@@ -5,6 +5,7 @@ namespace App\Entity;
 
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Serializer;
 
 /**
  * @ORM\Table(name="game_elements")
@@ -16,6 +17,7 @@ class GameElements
      * @var int
      * @ORM\Column()
      * @ORM\GeneratedValue()
+     * @ORM\Id()
      */
     private $id;
 
@@ -56,8 +58,16 @@ class GameElements
     private $width;
 
     /**
-     * @return int
+     * @var int
+     * @ORM\Column(name="type")
      */
+    private $type;
+
+    /**
+     * @var array
+     */
+    private $coordinates = [];
+
     public function getId(): int
     {
         return $this->id;
@@ -126,6 +136,26 @@ class GameElements
     public function setWidth(int $width): void
     {
         $this->width = $width;
+    }
+
+    public function getType(): int
+    {
+        return $this->type;
+    }
+
+    public function setType(int $type): void
+    {
+        $this->type = $type;
+    }
+
+    public function getCoordinates(): array
+    {
+        return $this->coordinates;
+    }
+
+    public function setCoordinates(array $coordinates): void
+    {
+        $this->coordinates = $coordinates;
     }
 
 }

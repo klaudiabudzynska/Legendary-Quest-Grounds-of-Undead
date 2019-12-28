@@ -29,20 +29,20 @@ final class Version20191228085202 extends AbstractMigration
                         (nextval('class_id_seq'), 'Skeleton', 'desc', 1 , 3, 0, 0),
                         (nextval('class_id_seq'), 'Troll', 'desc', 4 , 5, 0, 0);
                         ");
-        $this->addSql('ALTER TABLE game_elements ADD COLUMN height INTEGER DEFAULT 1 NOT NULL, ADD COLUMN width INTEGER DEFAULT 1;');
-        $this->addSql("INSERT INTO game_elements (id, name, description, weight, can_move, height, width) VALUES 
-                            (nextval('game_elements_id_seq'), 'K', 'Kościół', 0, false, 6, 6),
-                            (nextval('game_elements_id_seq'), 'P', 'Płot', 0, false, 1, 3),
-                            (nextval('game_elements_id_seq'), 'S', 'Słupek', 0, false, 1, 1),
-                            (nextval('game_elements_id_seq'), 'B', 'Bagno', 3, true, 1, 1),
-                            (nextval('game_elements_id_seq'), 'H', 'Ścieżka', 1, true, 1, 1),
-                            (nextval('game_elements_id_seq'), 'G', 'Nagrobek', 0, false, 1, 1),
-                            (nextval('game_elements_id_seq'), 'T', 'Drzewo', 0, false, 1, 1),
-                            (nextval('game_elements_id_seq'), 'R', 'Pochodnia', 0, false, 1, 1),                                                                                         
-                            (nextval('game_elements_id_seq'), 'Z', 'Krzak', 0, false, 2, 2),                                                                                         
-                            (nextval('game_elements_id_seq'), 'C1', 'Skrzynia 1', 0, false, 1, 2),                                                                                         
-                            (nextval('game_elements_id_seq'), 'C2', 'Skrzynia 2', 0, false, 1, 2),                                                                                         
-                            (nextval('game_elements_id_seq'), 'O', 'Kamień', 2, true, 1, 1);                                                                                                    
+        $this->addSql('ALTER TABLE game_elements ADD COLUMN height INTEGER DEFAULT 1 NOT NULL, ADD COLUMN width INTEGER DEFAULT 1, ADD COLUMN type INTEGER DEFAULT 1;');
+        $this->addSql("INSERT INTO game_elements (id, name, description, weight, can_move, height, width, type) VALUES 
+                            (nextval('game_elements_id_seq'), 'Kościół', 'Kościół', 1, false, 3, 6, 2),
+                            (nextval('game_elements_id_seq'), 'Płot', 'Płot', 0, false, 1, 3, 1),
+                            (nextval('game_elements_id_seq'), 'Słupek', 'Słupek', 0, false, 1, 1, 1),
+                            (nextval('game_elements_id_seq'), 'Bagno', 'Bagno', 3, true, 1, 1, 0),
+                            (nextval('game_elements_id_seq'), 'Ścieżka', 'Ścieżka', 1, true, 1, 1, 0),
+                            (nextval('game_elements_id_seq'), 'Nagrobek', 'Nagrobek', 0, false, 1, 1, 1),
+                            (nextval('game_elements_id_seq'), 'Drzewo', 'Drzewo', 0, false, 1, 1, 1),
+                            (nextval('game_elements_id_seq'), 'Pochodnia', 'Pochodnia', 0, false, 1, 1, 1),                                                                                         
+                            (nextval('game_elements_id_seq'), 'Krzak', 'Krzak', 0, false, 2, 2, 1),                                                                                         
+                            (nextval('game_elements_id_seq'), 'Skrzynia1', 'Skrzynia 1', 0, false, 1, 2, 1),                                                                                         
+                            (nextval('game_elements_id_seq'), 'Skrzynia2', 'Skrzynia 2', 0, false, 1, 2, 1),                                                                                         
+                            (nextval('game_elements_id_seq'), 'Kamień', 'Kamień', 2, true, 1, 1, 1);                                                                                                    
                             ");
     }
 

@@ -22,7 +22,7 @@ Promise.all([
   scene.layers.push(backgroundLayer);
 
   human.pos.set(1, 0);
-  human.vel.set(1, 0);
+  human.vel.set(3, 0);
 
   const characterLayer = createCharacterLayer(human);
   scene.layers.push(characterLayer);

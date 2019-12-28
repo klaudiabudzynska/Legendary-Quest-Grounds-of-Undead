@@ -6,8 +6,6 @@ export function createHuman() {
   .then(sprite =>{
     const human = new Character();
 
-    
-  
     human.draw = function drawHuman(ctx){
       sprite.draw('idle', ctx, this.pos.x, this.pos.y);
     }

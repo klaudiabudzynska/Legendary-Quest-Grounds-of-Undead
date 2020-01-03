@@ -8,6 +8,14 @@ const canvas = document.getElementById('canvas');
 const ctx = canvas.getContext('2d');
 ctx.scale(3,3);
 
+fetch('https://localhost:8000/game/map')
+.then(res => {
+  return res;
+})
+.then(json => {
+  console.log(json);
+})
+
 Promise.all([
   loadBackground(), 
   createHuman(),

@@ -4,10 +4,13 @@ import { createBackgroundLayer, createCharacterLayer } from './layers.js';
 import Scene from './Scene.js';
 import Timer from './Timer.js';
 import { createHuman } from './characters.js';
+import MouseDetector from './MouseDetector.js';
 
 const canvas = document.getElementById('canvas');
 const ctx = canvas.getContext('2d');
-ctx.scale(1.5, 1.5);
+
+const input = new MouseDetector();
+canvas.addEventListener('click', input.handleEvent)
 
 Promise.all([
   loadBackground(), 
@@ -20,8 +23,6 @@ Promise.all([
   human, 
 ]) => {
   const scene = new Scene();
-
-  console.log(mapData);
 
   const backgroundLayer = createBackgroundLayer(background, mapData);
   scene.layers.push(backgroundLayer);

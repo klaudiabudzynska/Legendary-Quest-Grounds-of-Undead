@@ -18,6 +18,6 @@
   },
   "homepage": "https://github.com/Klaudix/Legendary-Quest-Grounds-of-Undead#readme",
   "dependencies": {
-    "serve": "^11.2.0"
+    "serve": "^11.3.0"
   }
 }

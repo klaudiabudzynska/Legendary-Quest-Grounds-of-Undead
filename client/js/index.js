@@ -16,18 +16,19 @@ Promise.all([
 ])
 .then(([
   background, 
-  map,
+  mapData,
   human, 
 ]) => {
   const scene = new Scene();
 
-  const backgroundLayer = createBackgroundLayer(background);
+  console.log(mapData);
+
+  const backgroundLayer = createBackgroundLayer(background, mapData);
   scene.layers.push(backgroundLayer);
 
   human.pos.set(1, 0);
   human.vel.set(3, 0);
 
-  console.log(map);
 
   const characterLayer = createCharacterLayer(human);
   scene.layers.push(characterLayer);

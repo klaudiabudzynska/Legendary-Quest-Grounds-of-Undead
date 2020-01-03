@@ -5,7 +5,7 @@ export function createBackgroundLayer(background) {
 
   buffer.getContext('2d').fillStyle = "#89d27c";
   buffer.getContext('2d').fillRect(0, 0, canvas.width, canvas.height);
-  background.draw('rock-1', buffer.getContext('2d'), 0, 0);
+  background.draw('Pole', buffer.getContext('2d'), 0, 0);
 
   return function drawLayer(ctx){
     ctx.drawImage(buffer, 0, 0);

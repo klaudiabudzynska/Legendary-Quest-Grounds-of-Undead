@@ -1,4 +1,5 @@
 import { loadBackground } from './spriteSheet.js';
+import { mapLoader } from './loaders.js';
 import { createBackgroundLayer, createCharacterLayer } from './layers.js';
 import Scene from './Scene.js';
 import Timer from './Timer.js';
@@ -6,22 +7,16 @@ import { createHuman } from './characters.js';
 
 const canvas = document.getElementById('canvas');
 const ctx = canvas.getContext('2d');
-ctx.scale(3,3);
-
-fetch('https://localhost:8000/game/map')
-.then(res => {
-  return res;
-})
-.then(json => {
-  console.log(json);
-})
+ctx.scale(1.5, 1.5);
 
 Promise.all([
   loadBackground(), 
+  mapLoader(),
   createHuman(),
 ])
 .then(([
   background, 
+  map,
   human, 
 ]) => {
   const scene = new Scene();
@@ -31,6 +26,8 @@ Promise.all([
 
   human.pos.set(1, 0);
   human.vel.set(3, 0);
+
+  console.log(map);
 
   const characterLayer = createCharacterLayer(human);
   scene.layers.push(characterLayer);

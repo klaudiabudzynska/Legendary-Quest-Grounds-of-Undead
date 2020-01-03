@@ -7,3 +7,8 @@ export function imageLoader(url){
     img.src = url;
   })
 }
+
+export function mapLoader () {
+  return fetch('https://localhost:8000/game/map')
+  .then(res => res.json())
+}

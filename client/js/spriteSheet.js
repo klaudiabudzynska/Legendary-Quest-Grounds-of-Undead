@@ -4,9 +4,11 @@ import Sprites from './Sprites.js';
 export function loadBackground(){
   return imageLoader('../img/TilesetGraveyard.png')
   .then(img => {
-    console.log('Tileset loaded ', img);
+
     const background = new Sprites(img, 16);
-    background.define('rock-1', 0, 0);
+    background.define('Pole', 0, 11);
+    background.define('Fence', 0, 11);
+    
     return background;
     
   })

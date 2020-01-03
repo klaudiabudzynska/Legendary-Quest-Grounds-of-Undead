@@ -6,8 +6,8 @@ export function loadBackground(){
   .then(img => {
 
     const background = new Sprites(img, 16);
-    background.define('Pole', 0, 11);
-    background.define('Fence', 0, 11);
+    background.define('Pole', 0, 11, 1, 1);
+    background.define('Fence', 3, 10, 2, 1);
     
     return background;
     
@@ -19,7 +19,7 @@ export function loadCharacter(){
   .then( img => {
     console.log('Character loaded', img);
     const human = new Sprites(img, 20);
-    human.define('idle', 1, 0);
+    human.define('idle', 1, 0, 1, 1);
     return human;
   })
 }

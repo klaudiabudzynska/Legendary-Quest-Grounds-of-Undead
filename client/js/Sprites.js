@@ -7,23 +7,26 @@ export default class Sprites {
     this.tiles = new Map();
   }
 
-  define(name, x, y){
+  define(name, x, y, width, height){
     const buffer = document.createElement('canvas');
-    buffer.width = this.defaultSize;
-    buffer.height = this.defaultSize;
+    buffer.width = this.defaultSize * width;
+    buffer.height = this.defaultSize * height;
+
     const bufferCtx = buffer.getContext('2d');
     bufferCtx.drawImage(
         this.url,
         x * this.size,
         y * this.size,
-        this.size,
-        this.size,
+        this.size * width,
+        this.size * height,
         0, 0,
-        this.defaultSize,
-        this.defaultSize
+        buffer.width,
+        buffer.height
     );
+
     bufferCtx.rect(0, 0, buffer.width, buffer.height);
     bufferCtx.stroke();
+
     this.tiles.set(name, buffer);  
   }
 

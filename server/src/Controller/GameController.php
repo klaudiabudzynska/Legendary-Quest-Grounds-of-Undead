@@ -31,8 +31,8 @@ class GameController extends AppController
      */
     public function indexAction(Request $request){
         [$json, $tab] = $this->gameService->boardGenerate();
-        //return new Response($this->Serialize($json, "json"));
-        return new Response("<style>*{font-family: monospace;}</style>".$this->gameService->displayBoard($tab));
+        return new Response($this->Serialize($json, "json"));
+        //return new Response("<style>*{font-family: monospace;}</style>".$this->gameService->displayBoard($tab));
     }
 
     /**
@@ -41,5 +41,12 @@ class GameController extends AppController
     public function mapAction(){
         [$json, $tab] = $this->gameService->boardGenerate();
         return new Response($this->Serialize($json, "json"));
+    }
+
+    /**
+     * @Route("/move/{id}/{X}/{Y}", requirements={"id":"\d+", "X":"\d+", "Y":"\d+"})
+     */
+    public function moveAction(int $id, int $X, int $Y ){
+        return new JsonResponse([["id"=>$id], ["X"=>$X], ["Y"=>$Y]]);
     }
 }

@@ -1,26 +1,23 @@
 <?php
 
 
-namespace App\Entity;
+namespace App\DTO;
 
 
+use App\Entity\GameElements;
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\Serializer\Serializer;
 
 /**
  * @ORM\Table(name="game_elements")
  * @ORM\Entity(repositoryClass="\App\Repository\GameElementsRepository")
  */
-class GameElements
+class GameElementsDTO
 {
 
     public const HORIZONTAL = "H";
     public const VERTICAL = "V";
     /**
      * @var int
-     * @ORM\Column()
-     * @ORM\GeneratedValue()
-     * @ORM\Id()
      */
     private $id;
 
@@ -30,43 +27,36 @@ class GameElements
     private $angle;
     /**
      * @var string
-     * @ORM\Column()
      */
     private $name;
 
     /**
      * @var string
-     * @ORM\Column()
      */
     private $description;
 
     /**
      * @var int
-     * @ORM\Column()
      */
     private $weight;
 
     /**
      * @var bool
-     * @ORM\Column(name="can_move", type="boolean")
      */
     private $canMove;
 
     /**
      * @var int
-     * @ORM\Column()
      */
     private $height;
 
     /**
      * @var int
-     * @ORM\Column()
      */
     private $width;
 
     /**
      * @var int
-     * @ORM\Column(name="type")
      */
     private $type;
 
@@ -74,6 +64,21 @@ class GameElements
      * @var array
      */
     private $coordinates = [];
+
+    public function __construct(GameElements $element)
+    {
+        $this->name = $element->getName();
+        $this->id = time();
+        $this->type = $element->getType();
+        $this->angle = $element->getAngle();
+        $this->canMove = $element->isCanMove();
+        $this->coordinates = [];
+        $this->description = $element->getDescription();
+        $this->height = $element->getHeight();
+        $this->weight = $element->getWeight();
+        $this->width = $element->getWidth();
+    }
+
 
     public function getId(): int
     {

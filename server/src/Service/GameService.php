@@ -22,7 +22,7 @@ class GameService
     }
 
     public function boardGenerate(){
-        $length = 32;
+        $length = 23;
         $tab = [];
         $json = [];
 

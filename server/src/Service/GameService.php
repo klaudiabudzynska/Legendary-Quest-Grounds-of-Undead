@@ -4,6 +4,7 @@
 namespace App\Service;
 
 
+use App\DTO\GameElementsDTO;
 use App\Entity\GameElements;
 use App\Repository\GameElementsRepository;
 
@@ -21,7 +22,7 @@ class GameService
     }
 
     public function boardGenerate(){
-        $length = 32;
+        $length = 23;
         $tab = [];
         $json = [];
 
@@ -34,11 +35,22 @@ class GameService
         $pole->setCoordinates($coords);
         array_push($json, $pole);
 
-        /** @var GameElements $fence */
-        $fence = $this->gameElementsRepository->findOneBy(["name" => "Fence"]);
-        [$coords, $board] = $this->loadBarrier($tab, $fence, $length);
-        $fence->setCoordinates($coords);
-        array_push($json, $fence);
+        /** @var GameElements $fence1 */
+        $fence1 = $this->gameElementsRepository->findOneBy(["name" => "Fence"]);
+        [$coords, $board] = $this->loadBarrier($tab, $fence1, $length, GameElements::HORIZONTAL);
+	    $fence1->setName("fence_horizontal");
+        $fence1->setAngle(GameElements::HORIZONTAL);
+        $fence1->setCoordinates($coords);
+        array_push($json, $fence1);
+
+        /** @var GameElements $fence3 */
+        $fence2 = $this->gameElementsRepository->findOneBy(["name" => "Fence"]);
+        $fence3 = new GameElementsDTO($fence2);
+        [$coords, $board] = $this->loadBarrier($tab, $fence2, $length, GameElements::VERTICAL, $fence3);
+        $fence3->setAngle(GameElements::VERTICAL);
+	    $fence3->setName("fence_vertical");
+        $fence3->setCoordinates($coords);
+        array_push($json, $fence3);
 
         /** @var GameElements $church */
         $church = $this->gameElementsRepository->findOneBy(["name" => "Church"]);
@@ -93,8 +105,10 @@ class GameService
         return $k;
     }
 
-    private function loadBarrier(array &$tab, GameElements $element, int $length)
+    private function loadBarrier(array &$tab, GameElements $element1, int $length, string $angle = GameElements::HORIZONTAL, GameElementsDTO $element2 = null )
     {
+        if($element2 == null) $element = $element1;
+        else $element = $element2;
         $coords = [];
         if($element->getType() == -1){
             $tab[0][0] = "P";
@@ -105,8 +119,8 @@ class GameService
             $coords = ["0;0", "0;".($length - 1), ($length - 1).";0", ($length - 1).";".($length - 1)];
         }
         else{
-            for($i = 1; $i < $length - 2; $i+=$element->getWidth()){
-                if($i >= $length - 2) continue;
+            for($i = 1; $i < $length - 1; $i+=$element->getWidth()){
+                if($i >= $length - 1) continue;
                 for($j = $i; $j < $i + $element->getWidth(); $j++){
                     $tab[0][$j] = "F";
                     $tab[$length - 1][$j] = "F";
@@ -114,10 +128,14 @@ class GameService
                     $tab[$j][$length - 1] = "F";
                 }
 
-                $coords[] = "0;{$i}";
-                $coords[] = "{$j};0";
-                $coords[] = ($length-2).";{$j}";
-                $coords[] = "{$j};".($length - 1);
+                if($angle == GameElements::HORIZONTAL){
+                    $coords[] = "0;{$i}";
+                    $coords[] = ($length-1).";{$i}";
+                }
+                if($angle == GameElements::VERTICAL){
+                    $coords[] = "{$i};0";
+                    $coords[] = "{$i};".($length - 1);
+                }
             }
         }
         return [$coords, $tab];
@@ -167,7 +185,7 @@ class GameService
         $x = rand(1, $length - 2 - $church->getWidth());
         $y = rand(1, $length - 2 - $church->getHeight());
 
-        $coords = ["{$x};{$y}"];
+        $coords = ["{$y};{$x}"];
 
         for ($i = $y; $i < $y + $church->getHeight(); $i++){
             for ($j = $x; $j < $x + $church->getWidth(); $j++){

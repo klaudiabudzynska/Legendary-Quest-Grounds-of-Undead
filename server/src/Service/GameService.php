@@ -37,11 +37,12 @@ class GameService
 
         /** @var GameElements $fence1 */
         $fence1 = $this->gameElementsRepository->findOneBy(["name" => "Fence"]);
-        [$coords, $board] = $this->loadBarrier($tab, $fence1, $length, GameElements::HORIZONTAL);
-	    $fence1->setName("fence_horizontal");
-        $fence1->setAngle(GameElements::HORIZONTAL);
-        $fence1->setCoordinates($coords);
-        array_push($json, $fence1);
+        $fence4 = new GameElementsDTO($fence1);
+        [$coords, $board] = $this->loadBarrier($tab, $fence1, $length, GameElements::HORIZONTAL, $fence4);
+	    $fence4->setName("fence_horizontal");
+        $fence4->setAngle(GameElements::HORIZONTAL);
+        $fence4->setCoordinates($coords);
+        array_push($json, $fence4);
 
         /** @var GameElements $fence3 */
         $fence2 = $this->gameElementsRepository->findOneBy(["name" => "Fence"]);

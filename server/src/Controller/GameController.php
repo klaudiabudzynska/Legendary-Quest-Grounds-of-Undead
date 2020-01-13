@@ -75,6 +75,14 @@ class GameController extends AppController
     }
 
     /**
+     * @Route("/user")
+     */
+    public function userAction()
+    {
+        $cookie 
+    }
+
+    /**
      * @Route("/move/{id}/{X}/{Y}", requirements={"id":"\d+", "X":"\d+", "Y":"\d+"})
      */
     public function moveAction(int $id, int $X, int $Y ){

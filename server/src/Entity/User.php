@@ -19,8 +19,8 @@ class User
     private $id;
 
     /**
-     * @var integer
-     * @ORM\OneToOne(targetEntity="Clas")
+     * @var HeroClass
+     * @ORM\OneToOne(targetEntity="HeroClass")
      */
     private $class;
 
@@ -35,6 +35,22 @@ class User
      * @ORM\Column(name="move", type="boolean")
      */
     private $move;
+
+    /**
+     * @return HeroClass
+     */
+    public function getClass(): HeroClass
+    {
+        return $this->class;
+    }
+
+    /**
+     * @param HeroClass $class
+     */
+    public function setClass(HeroClass $class): void
+    {
+        $this->class = $class;
+    }
 
     /**
      * @return mixed
@@ -52,21 +68,6 @@ class User
         $this->id = $id;
     }
 
-    /**
-     * @return int
-     */
-    public function getClassId(): int
-    {
-        return $this->classId;
-    }
-
-    /**
-     * @param int $classId
-     */
-    public function setClassId(int $classId): void
-    {
-        $this->classId = $classId;
-    }
 
     /**
      * @return string
@@ -100,9 +101,9 @@ class User
         $this->move = $move;
     }
 
-    public function __construct(int $classId, bool $move, string $username)
+    public function __construct(HeroClass $class, bool $move, string $username)
     {
-        $this->classId = $classId;
+        $this->class = $class;
         $this->move = $move;
         $this->username = $username;
     }

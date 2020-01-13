@@ -7,6 +7,7 @@ namespace App\Controller;
 use App\Entity\Board;
 use App\Entity\User;
 use App\Repository\BoardRepository;
+use App\Repository\HeroClassRepository;
 use App\Repository\UserRepository;
 use App\Service\GameService;
 use Doctrine\ORM\EntityManager;
@@ -42,9 +43,14 @@ class GameController extends AppController
      * @var UserRepository
      */
     private $userRepository;
+    /**
+     * @var HeroClassRepository
+     */
+    private $heroClassRepository;
 
-    public function __construct(UserRepository $userRepository, EntityManagerInterface $em, GameService $gameService, BoardRepository $boardRepository)
+    public function __construct(HeroClassRepository $heroClassRepository, UserRepository $userRepository, EntityManagerInterface $em, GameService $gameService, BoardRepository $boardRepository)
     {
+        $this->heroClassRepository = $heroClassRepository;
         $this->userRepository = $userRepository;
         $this->em = $em;
         $this->boardRepository = $boardRepository;
@@ -93,7 +99,7 @@ class GameController extends AppController
         else if ($r % 2 == 0) $c = 2;
         else $c = 1;
 
-        $user = new User($c, false, "hero".time());
+        $user = new User($this->heroClassRepository->findOneBy(["id"=>$c]), false, "hero".time());
 
         $this->em->persist($user);
         $this->em->flush();

@@ -73,14 +73,7 @@ class GameController extends AppController
 
         return new Response($this->Serialize($json , "json"));
     }
-
-    /**
-     * @Route("/user")
-     */
-    public function userAction()
-    {
-        $cookie 
-    }
+    
 
     /**
      * @Route("/move/{id}/{X}/{Y}", requirements={"id":"\d+", "X":"\d+", "Y":"\d+"})

@@ -79,7 +79,7 @@ class GameController extends AppController
      */
     public function userAction()
     {
-        $cookie 
+        //$user = new ""
     }
 
     /**

@@ -20,9 +20,9 @@ class User
 
     /**
      * @var integer
-     * @ORM\Column(name="class_id")
+     * @ORM\OneToOne(targetEntity="Clas")
      */
-    private $classId;
+    private $class;
 
     /**
      * @var string
@@ -31,10 +31,79 @@ class User
     private $username;
 
     /**
-     * @var boolean
-     * @ORM\Column(name="move")
+     * @var bool
+     * @ORM\Column(name="move", type="boolean")
      */
     private $move;
 
+    /**
+     * @return mixed
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
 
+    /**
+     * @param mixed $id
+     */
+    public function setId($id): void
+    {
+        $this->id = $id;
+    }
+
+    /**
+     * @return int
+     */
+    public function getClassId(): int
+    {
+        return $this->classId;
+    }
+
+    /**
+     * @param int $classId
+     */
+    public function setClassId(int $classId): void
+    {
+        $this->classId = $classId;
+    }
+
+    /**
+     * @return string
+     */
+    public function getUsername(): string
+    {
+        return $this->username;
+    }
+
+    /**
+     * @param string $username
+     */
+    public function setUsername(string $username): void
+    {
+        $this->username = $username;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isMove(): bool
+    {
+        return $this->move;
+    }
+
+    /**
+     * @param bool $move
+     */
+    public function setMove(bool $move): void
+    {
+        $this->move = $move;
+    }
+
+    public function __construct(int $classId, bool $move, string $username)
+    {
+        $this->classId = $classId;
+        $this->move = $move;
+        $this->username = $username;
+    }
 }

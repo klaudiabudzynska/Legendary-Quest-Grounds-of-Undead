@@ -5,11 +5,14 @@ namespace App\Controller;
 
 
 use App\Entity\Board;
+use App\Entity\User;
 use App\Repository\BoardRepository;
+use App\Repository\UserRepository;
 use App\Service\GameService;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Cookie;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -35,8 +38,14 @@ class GameController extends AppController
      */
     private $em;
 
-    public function __construct(EntityManagerInterface $em, GameService $gameService, BoardRepository $boardRepository)
+    /**
+     * @var UserRepository
+     */
+    private $userRepository;
+
+    public function __construct(UserRepository $userRepository, EntityManagerInterface $em, GameService $gameService, BoardRepository $boardRepository)
     {
+        $this->userRepository = $userRepository;
         $this->em = $em;
         $this->boardRepository = $boardRepository;
         $this->gameService = $gameService;
@@ -79,7 +88,17 @@ class GameController extends AppController
      */
     public function userAction()
     {
-        //$user = new ""
+        $r = rand(1, 99);
+        if($r % 3 == 0) $c = 3;
+        else if ($r % 2 == 0) $c = 2;
+        else $c = 1;
+
+        $user = new User($c, false, "hero".time());
+
+        $this->em->persist($user);
+        $this->em->flush();
+        
+        return new Response($this->Serialize($user, "json"));
     }
 
     /**

@@ -5,11 +5,15 @@ namespace App\Controller;
 
 
 use App\Entity\Board;
+use App\Entity\User;
 use App\Repository\BoardRepository;
+use App\Repository\HeroClassRepository;
+use App\Repository\UserRepository;
 use App\Service\GameService;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Cookie;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -35,8 +39,19 @@ class GameController extends AppController
      */
     private $em;
 
-    public function __construct(EntityManagerInterface $em, GameService $gameService, BoardRepository $boardRepository)
+    /**
+     * @var UserRepository
+     */
+    private $userRepository;
+    /**
+     * @var HeroClassRepository
+     */
+    private $heroClassRepository;
+
+    public function __construct(HeroClassRepository $heroClassRepository, UserRepository $userRepository, EntityManagerInterface $em, GameService $gameService, BoardRepository $boardRepository)
     {
+        $this->heroClassRepository = $heroClassRepository;
+        $this->userRepository = $userRepository;
         $this->em = $em;
         $this->boardRepository = $boardRepository;
         $this->gameService = $gameService;
@@ -73,7 +88,24 @@ class GameController extends AppController
 
         return new Response($this->Serialize($json , "json"));
     }
-    
+
+    /**
+     * @Route("/user")
+     */
+    public function userAction()
+    {
+        $r = rand(1, 99);
+        if($r % 3 == 0) $c = 3;
+        else if ($r % 2 == 0) $c = 2;
+        else $c = 1;
+
+        $user = new User($this->heroClassRepository->findOneBy(["id"=>$c]), false, "hero".time());
+
+        $this->em->persist($user);
+        $this->em->flush();
+        
+        return new Response($this->Serialize($user, "json"));
+    }
 
     /**
      * @Route("/move/{id}/{X}/{Y}", requirements={"id":"\d+", "X":"\d+", "Y":"\d+"})
@@ -81,7 +113,4 @@ class GameController extends AppController
     public function moveAction(int $id, int $X, int $Y ){
         return new JsonResponse([["id"=>$id], ["X"=>$X], ["Y"=>$Y]]);
     }
-
-
-
 }

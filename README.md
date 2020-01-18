@@ -37,3 +37,4 @@
 * Aby przetestować czy backend działa
   * wpsiujemy symfony server:start
   * w przeglądarce wpisujemy adres podany w terminalu z dopiskiem ```/test/```
+  

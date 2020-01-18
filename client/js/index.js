@@ -5,6 +5,7 @@ import Scene from './Scene.js';
 import Timer from './Timer.js';
 import { createHuman } from './characters.js';
 import MouseDetector from './MouseDetector.js';
+import { HttpRequest } from './ajax.js'
 
 const canvas = document.getElementById('canvas');
 const ctx = canvas.getContext('2d');
@@ -31,6 +32,8 @@ Promise.all([
 
   const input = new MouseDetector();
   input.listen(canvas, (pos) => {
+    let humanMoveRequest = new HttpRequest(`https://localhost:8000/move/123/${pos.x}/${pos.y}`);
+    humanMoveRequest.send();
     console.log(pos);
     human.walk.start(pos);
   });

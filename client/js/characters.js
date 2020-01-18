@@ -1,4 +1,6 @@
 import Character from './Character.js';
+import Walk from './movements/Walk.js';
+import Velocity from './movements/Velocity.js';
 import { loadCharacter } from './spriteSheet.js';
 
 export function createHuman() {
@@ -10,9 +12,12 @@ export function createHuman() {
       sprite.draw('idle', ctx, this.pos.x, this.pos.y);
     }
   
-    human.update = function updateHuman(deltaTime){
-      this.pos.x += this.vel.x * deltaTime;
-      this.pos.y += this.vel.y * deltaTime;
+    human.addMovement(new Velocity);
+    human.addMovement(new Walk);
+    
+    human.track = function trackHuman(map, destX, destY){
+      let tracks = [];
+      // for(let i = 0; i < )
     }
     return human;
   })

@@ -9,8 +9,7 @@ import MouseDetector from './MouseDetector.js';
 const canvas = document.getElementById('canvas');
 const ctx = canvas.getContext('2d');
 
-const input = new MouseDetector();
-canvas.addEventListener('click', input.handleEvent)
+
 
 Promise.all([
   loadBackground(), 
@@ -27,9 +26,14 @@ Promise.all([
   const backgroundLayer = createBackgroundLayer(background, mapData);
   scene.layers.push(backgroundLayer);
 
-  human.pos.set(1, 0);
+  human.pos.set(1, 1);
   human.vel.set(3, 0);
 
+  const input = new MouseDetector();
+  input.listen(canvas, (pos) => {
+    console.log(pos);
+    human.walk.start(pos);
+  });
 
   const characterLayer = createCharacterLayer(human);
   scene.layers.push(characterLayer);

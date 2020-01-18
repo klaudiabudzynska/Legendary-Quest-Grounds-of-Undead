@@ -8,3 +8,5 @@ server/.idea
 */.idea
 .idea
 .idea/*
+*.pdf
+*.docx

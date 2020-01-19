@@ -28,7 +28,7 @@ export default class TileCollider {
   test(coords){
     const match = this.tiles.matchByIndex(coords.x, coords.y);
     if(match) {
-      console.log('matched tile: ', match, match.tile )
+      //console.log('matched tile: ', match, match.tile )
     }
     return this.checkCollision(coords);
   }

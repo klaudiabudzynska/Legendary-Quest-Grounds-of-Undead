@@ -6,11 +6,13 @@ const LEVEL = new Level;
 
 function createMapTiles(level, backgrounds){
   backgrounds.forEach(background => {
+    console.log(background);
     background.coordinates.forEach(coord => {
       const x = coord.split(';')[0];
       const y = coord.split(';')[1];
       level.tiles.set(x, y, {
-        name: background.name
+        name: background.name,
+        weight: background.weight,
       });
     })
   })

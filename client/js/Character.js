@@ -17,11 +17,13 @@ export default class Character {
 
     this.movements = [];
   }
-
+  
   addMovement(movement){
     this.movements.push(movement);
     this[movement.name] = movement;
   }
+
+  
 
   update(deltaTime) {
     this.movements.forEach(movement => {

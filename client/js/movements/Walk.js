@@ -1,15 +1,23 @@
 import { Movement } from '../Character.js';
 import { Vector } from '../math.js';
+import TileCollider from '../TileCollider.js';
+import Level from '../Level.js';
+import { getTilesMatrix } from '../loaders.js';
 
-export default class Velocity extends Movement{
+export default class Walk extends Movement{
   constructor(){
     super('walk');
 
     this.dest = new Vector(0, 0);
+    this.level = new Level;
+    this.tileCollider = new TileCollider(getTilesMatrix());
   }
 
   start(destPos){
-    this.dest.set(destPos.x, destPos.y);
+    //jeśli nie zaszła kolizja
+    if(!this.tileCollider.test(destPos)){
+      this.dest.set(destPos.x, destPos.y);
+    }
   }
 
   update(character, deltaTime){

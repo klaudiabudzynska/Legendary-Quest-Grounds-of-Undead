@@ -15,7 +15,10 @@ Promise.all([
   level,
   human, 
 ]) => {
+
+  human.pos.set(1,1);
   level.characters.add(human);
+  human.walk.start(human.pos);
 
   const input = new MouseDetector();
   input.listen(canvas, (pos) => {

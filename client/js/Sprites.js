@@ -25,7 +25,6 @@ export default class Sprites {
     );
 
     bufferCtx.rect(0, 0, buffer.width, buffer.height);
-    // bufferCtx.stroke();
 
     this.tiles.set(name, buffer);  
   }

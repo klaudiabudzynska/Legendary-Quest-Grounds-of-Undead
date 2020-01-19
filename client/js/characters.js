@@ -6,7 +6,7 @@ import { loadHuman } from './spriteSheet.js';
 export function createHuman() {
   return loadHuman()
   .then(humanSprite =>{
-    const human = new Character();
+    const human = new Character;
 
     human.draw = function drawHuman(ctx){
       humanSprite.draw('idle', ctx, this.pos.x, this.pos.y);
@@ -15,10 +15,6 @@ export function createHuman() {
     human.addMovement(new Velocity);
     human.addMovement(new Walk);
     
-    human.track = function trackHuman(map, destX, destY){
-      let tracks = [];
-      // for(let i = 0; i < )
-    }
     return human;
   })
 }

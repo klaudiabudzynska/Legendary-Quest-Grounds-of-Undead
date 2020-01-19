@@ -6,7 +6,7 @@ export default class Velocity extends Movement{
   }
 
   update(character, deltaTime){
-    character.pos.x += character.vel.x * deltaTime;
-    character.pos.y += character.vel.y * deltaTime;
+    // character.pos.x += character.vel.x * deltaTime;
+    // character.pos.y += character.vel.y * deltaTime;
   }
 }

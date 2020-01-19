@@ -2,6 +2,8 @@ import Level from './Level.js';
 import { createBackgroundLayer, createCharacterLayer } from './layers.js';
 import { loadBackground } from './spriteSheet.js';
 
+const LEVEL = new Level;
+
 function createMapTiles(level, backgrounds){
   backgrounds.forEach(background => {
     background.coordinates.forEach(coord => {
@@ -30,7 +32,7 @@ export function levelLoader() {
     .then(res => res.json()),
     loadBackground()
   ]).then(([levelSpec, background]) => {
-    const level = new Level;
+    const level = LEVEL;
 
     createMapTiles(level, levelSpec);
 
@@ -40,10 +42,12 @@ export function levelLoader() {
     const characterLayer = createCharacterLayer(level.characters);
     level.scene.layers.push(characterLayer);
 
-    console.table(level.tiles.grid);
-
     return level;
   })
+}
+
+export function getTilesMatrix() {
+  return LEVEL.tiles;
 }
 
 

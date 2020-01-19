@@ -6,11 +6,16 @@ export default class Level {
     this.scene = new Scene();
     this.characters = new Set();
     this.tiles = new Matrix();
+
   }
 
   update(deltaTime){
     this.characters.forEach(character => {
       character.update(deltaTime);
     })
+  }
+
+  getTiles(){
+    return this.tiles;
   }
 }

@@ -1,20 +1,15 @@
-export function createBackgroundLayer(background, mapData) {
+export function createBackgroundLayer(background, level) {
   const buffer = document.createElement('canvas');
   buffer.width = canvas.width;
   buffer.height = canvas.height;
 
+  const bufferCtx = buffer.getContext('2d');
 
+  bufferCtx.fillStyle = "#89d27c";
+  bufferCtx.fillRect(0, 0, canvas.width, canvas.height);
 
-  buffer.getContext('2d').fillStyle = "#89d27c";
-  buffer.getContext('2d').fillRect(0, 0, canvas.width, canvas.height);
-
-  mapData.forEach(element => {
-    console.log(element);
-    for (var i = 0; i < element.coordinates.length; ++i) {
-      let x = element.coordinates[i].split(';')[0];
-      let y = element.coordinates[i].split(';')[1];
-      background.draw(element.name, buffer.getContext('2d'), x, y);
-    }
+  level.tiles.loopOver((tile, x, y) => {
+    background.draw(tile.name, bufferCtx, x, y);
   })
 
   return function drawLayer(ctx) {

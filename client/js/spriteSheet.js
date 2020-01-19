@@ -18,7 +18,7 @@ export function loadBackground(){
   })
 }
 
-export function loadCharacter(){
+export function loadHuman(){
   return imageLoader('../img/Human/human_regular_hair.png')
   .then( img => {
     console.log('Character loaded', img);

@@ -122,7 +122,4 @@ class GameController extends AppController
     public function moveAction(int $id, int $X, int $Y ){
         return new JsonResponse([["id"=>$id], ["X"=>$X], ["Y"=>$Y]]);
     }
-
-
-
 }

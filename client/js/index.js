@@ -1,43 +1,37 @@
-import { loadBackground } from './spriteSheet.js';
-import { mapLoader } from './loaders.js';
-import { createBackgroundLayer, createCharacterLayer } from './layers.js';
-import Scene from './Scene.js';
+import { levelLoader } from './loaders.js';
 import Timer from './Timer.js';
 import { createHuman } from './characters.js';
 import MouseDetector from './MouseDetector.js';
+import Player from './Player.js';
 
 const canvas = document.getElementById('canvas');
 const ctx = canvas.getContext('2d');
 
-const input = new MouseDetector();
-canvas.addEventListener('click', input.handleEvent)
-
 Promise.all([
-  loadBackground(), 
-  mapLoader(),
+  levelLoader(),
   createHuman(),
 ])
 .then(([
-  background, 
-  mapData,
+  level,
   human, 
 ]) => {
-  const scene = new Scene();
 
-  const backgroundLayer = createBackgroundLayer(background, mapData);
-  scene.layers.push(backgroundLayer);
+  human.pos.set(1,1);
+  human.dest.set(1,1);
 
-  human.pos.set(1, 0);
-  human.vel.set(3, 0);
+  level.characters.add(human);
+  human.walk.start(human.pos);
 
-
-  const characterLayer = createCharacterLayer(human);
-  scene.layers.push(characterLayer);
+  const player = new Player(123);
+  const input = new MouseDetector();
+  input.listen(canvas, (pos) => {
+    player.moveCharacter(human, pos);
+  });
 
   const timer = new Timer();
   timer.update = function update(deltaTime){
-    scene.draw(ctx);
-    human.update(deltaTime);
+    level.scene.draw(ctx);
+    level.update(deltaTime);
   }
 
   timer.start();

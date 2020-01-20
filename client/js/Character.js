@@ -13,6 +13,7 @@ export class Movement {
 export default class Character {
   constructor() {
     this.pos = new Vector(0, 0);
+    this.dest = new Vector(0, 0);
     this.vel = new Vector(0, 0);
     this.range;
 

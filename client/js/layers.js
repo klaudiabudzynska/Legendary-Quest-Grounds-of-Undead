@@ -24,3 +24,14 @@ export function createCharacterLayer(characters) {
     })
   }
 }
+
+export function createPathLayer(characters) {
+  return function drawLayer(ctx) {
+    characters.forEach(character => {
+      ctx.beginPath();
+      ctx.moveTo(character.pos.x * 32 + 16, character.pos.y * 32 + 16);
+      ctx.lineTo(character.dest.x * 32 + 16, character.dest.y * 32 + 16);
+      ctx.stroke();
+    })
+  }
+}

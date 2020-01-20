@@ -17,15 +17,17 @@ Promise.all([
 ]) => {
 
   human.pos.set(1,1);
+  human.dest.set(1,1);
   level.characters.add(human);
   human.walk.start(human.pos);
 
   const input = new MouseDetector();
   input.listen(canvas, (pos) => {
+    human.dest.set(pos.x, pos.y);
     let humanMoveRequest = new HttpRequest(`https://localhost:8000/game/move/123/${pos.x}/${pos.y}`);
     humanMoveRequest.send();
     console.log(pos);
-    human.walk.start(pos);
+    human.walk.start(human.dest);
   });
 
   const timer = new Timer();

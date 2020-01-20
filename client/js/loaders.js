@@ -1,5 +1,5 @@
 import Level from './Level.js';
-import { createBackgroundLayer, createCharacterLayer } from './layers.js';
+import { createBackgroundLayer, createCharacterLayer, createPathLayer } from './layers.js';
 import { loadBackground } from './spriteSheet.js';
 
 const LEVEL = new Level;
@@ -43,6 +43,9 @@ export function levelLoader() {
 
     const characterLayer = createCharacterLayer(level.characters);
     level.scene.layers.push(characterLayer);
+
+    const pathLayer = createPathLayer(level.characters)
+    level.scene.layers.push(pathLayer);
 
     return level;
   })

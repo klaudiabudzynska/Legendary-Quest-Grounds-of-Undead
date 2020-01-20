@@ -55,4 +55,9 @@ export function getTilesMatrix() {
   return LEVEL.tiles;
 }
 
+export function playerLoader() {
+  return fetch("https://localhost:8000/game/user")
+    .then(res => res.json());
+}
+
 

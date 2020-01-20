@@ -5,6 +5,7 @@ namespace App\Controller;
 
 
 use App\Entity\Board;
+use App\Entity\Mobs;
 use App\Entity\User;
 use App\Repository\BoardRepository;
 use App\Repository\HeroClassRepository;
@@ -94,17 +95,25 @@ class GameController extends AppController
      */
     public function userAction()
     {
-        $r = rand(1, 99);
-        if($r % 3 == 0) $c = 3;
-        else if ($r % 2 == 0) $c = 2;
-        else $c = 1;
 
-        $user = new User($this->heroClassRepository->findOneBy(["id"=>$c]), false, "hero".time());
+        $user = new User($this->heroClassRepository->findOneBy(["id"=>2]), false, "hero".time());
+        $mob1 = new User($this->heroClassRepository->findOneBy(["id"=>4]), false, "pig".time());
+        $mob2 = new User($this->heroClassRepository->findOneBy(["id"=>5]), false, "skeleton".time());
+        $mob3 = new User($this->heroClassRepository->findOneBy(["id"=>6]), false, "orc".time());
 
         $this->em->persist($user);
+        $this->em->persist($mob1);
+        $this->em->persist($mob3);
+        $this->em->persist($mob2);
         $this->em->flush();
-        
-        return new Response($this->Serialize($user, "json"));
+
+        $mobs = new Mobs();
+        $mobs->addHuman($user);
+        $mobs->addDarkMaster($mob1);
+        $mobs->addDarkMaster($mob2);
+        $mobs->addDarkMaster($mob3);
+
+        return new Response($this->Serialize($mobs, "json"));
     }
 
     /**

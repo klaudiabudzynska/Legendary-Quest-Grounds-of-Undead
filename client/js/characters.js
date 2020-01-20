@@ -14,6 +14,7 @@ export function createHuman() {
   
     human.addMovement(new Velocity);
     human.addMovement(new Walk);
+    human.range = 2;
     
     return human;
   })

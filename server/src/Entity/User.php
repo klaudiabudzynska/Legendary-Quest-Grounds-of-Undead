@@ -37,6 +37,18 @@ class User
     private $move;
 
     /**
+     * @var integer
+     * @ORM\Column(name="owner_id")
+     */
+    private $owner_id;
+
+    /**
+     * @var boolean
+     * @ORM\Column(name="is_active")
+     */
+    private $isActive;
+
+    /**
      * @return HeroClass
      */
     public function getClass(): HeroClass
@@ -106,5 +118,20 @@ class User
         $this->class = $class;
         $this->move = $move;
         $this->username = $username;
+    }
+
+    public function getOwnerId(): int
+    {
+        return $this->owner_id;
+    }
+
+    public function isActive(): bool
+    {
+        return $this->isActive;
+    }
+
+    public function setIsActive(bool $isActive): void
+    {
+        $this->isActive = $isActive;
     }
 }

@@ -183,8 +183,8 @@ class GameService
 
     private function loadChurch(array &$tab, GameElements $church, int $length): array
     {
-        $x = rand(1, $length - 2 - $church->getWidth());
-        $y = rand(1, $length - 2 - $church->getHeight());
+        $x = intval((( $length - 2 ) / 2 ) - 1);
+        $y = $x;
 
         $coords = ["{$y};{$x}"];
 

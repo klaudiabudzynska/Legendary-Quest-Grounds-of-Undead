@@ -92,9 +92,9 @@ class GameController extends AppController
     }
 
     /**
-     * @Route("/user")
+     * @Route("/hero")
      */
-    public function userAction()
+    public function heroAction()
     {
         $users = $this->userRepository->findCharacters();
         return new Response($this->Serialize($users, "json"));
@@ -113,9 +113,9 @@ class GameController extends AppController
     }
 
     /**
-     * @Route("/hero")
+     * @Route("/user")
      */
-    public function heroAction(){
+    public function userAction(){
         $hero = $this->userRepository->find(1);
         $master = $this->userRepository->find(2);
 

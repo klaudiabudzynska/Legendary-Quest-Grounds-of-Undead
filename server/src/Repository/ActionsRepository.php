@@ -19,32 +19,12 @@ class ActionsRepository extends ServiceEntityRepository
         parent::__construct($registry, Actions::class);
     }
 
-    // /**
-    //  * @return Actions[] Returns an array of Actions objects
-    //  */
-    /*
-    public function findByExampleField($value)
+    /**
+     * @return Actions[]
+     */
+    public function findLast()
     {
-        return $this->createQueryBuilder('a')
-            ->andWhere('a.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('a.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
-        ;
+        return $this->findBy([], ["id"=>'DESC'], 1);
     }
-    */
 
-    /*
-    public function findOneBySomeField($value): ?Actions
-    {
-        return $this->createQueryBuilder('a')
-            ->andWhere('a.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
-    }
-    */
 }

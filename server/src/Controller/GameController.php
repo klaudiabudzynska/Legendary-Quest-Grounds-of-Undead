@@ -8,6 +8,7 @@ use App\Entity\Actions;
 use App\Entity\Board;
 use App\Entity\Mobs;
 use App\Entity\User;
+use App\Repository\ActionsRepository;
 use App\Repository\BoardRepository;
 use App\Repository\HeroClassRepository;
 use App\Repository\UserRepository;
@@ -49,10 +50,15 @@ class GameController extends AppController
      * @var HeroClassRepository
      */
     private $heroClassRepository;
+    /**
+     * @var ActionsRepository
+     */
+    private $actionRepository;
 
-    public function __construct(HeroClassRepository $heroClassRepository, UserRepository $userRepository, EntityManagerInterface $em, GameService $gameService, BoardRepository $boardRepository)
+    public function __construct(ActionsRepository $actionsRepository, HeroClassRepository $heroClassRepository, UserRepository $userRepository, EntityManagerInterface $em, GameService $gameService, BoardRepository $boardRepository)
     {
         $this->heroClassRepository = $heroClassRepository;
+        $this->actionRepository = $actionsRepository;
         $this->userRepository = $userRepository;
         $this->em = $em;
         $this->boardRepository = $boardRepository;
@@ -165,6 +171,14 @@ class GameController extends AppController
         $this->em->flush();
 
         return new Response("true");
+    }
+
+    /**
+     * @Route("/last")
+     */
+    public function lastAction(){
+        $last = $this->actionRepository->findLast();
+        return new Response($this->Serialize($last, "json"));
     }
 
 }

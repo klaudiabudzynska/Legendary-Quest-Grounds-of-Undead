@@ -38,14 +38,14 @@ class Actions
     private $attack_mob_id;
 
     /**
-     * @var User
-     * @ORM\OneToOne(targetEntity="User")
+     * @var integer
+     * @ORM\Column(name="user_id")
      */
     private $user;
 
     public function __construct(User $user)
     {
-        $this->user = $user;
+        $this->user = $user->getId();
     }
 
 
@@ -102,14 +102,14 @@ class Actions
         return $this;
     }
 
-    public function getUser(): User
+    public function getUser(): int 
     {
         return $this->user;
     }
 
     public function setUser(User $user): void
     {
-        $this->user = $user;
+        $this->user = $user->getId();
     }
 
 

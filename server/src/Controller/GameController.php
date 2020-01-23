@@ -169,7 +169,6 @@ class GameController extends AppController
         $this->em->persist($hero);
         $this->em->persist($master);
         $this->em->flush();
-
         return new Response("true");
     }
 
@@ -179,6 +178,37 @@ class GameController extends AppController
     public function lastAction(){
         $last = $this->actionRepository->findLast();
         return new Response($this->Serialize($last, "json"));
+    }
+
+    /**
+     * @Route("/end/{id}", requirements={"id":"\d+"})
+     * @param User $id
+     * @return Response
+     * @throws \Doctrine\ORM\ORMException
+     * @throws \Doctrine\ORM\OptimisticLockException
+     */
+    public function endAction(User $id): Response
+    {
+        $hero = $this->userRepository->find(1);
+        $master = $this->userRepository->find(2);
+
+        $hero->setMove($id->getId() == 1 ? false : true);
+        $master->setMove($id->getId() == 2 ? false : true);
+
+        $this->em->persist($hero);
+        $this->em->persist($master);
+        $this->em->flush();
+        return new Response("true");
+
+    }
+
+    /**
+     * @Route("/next")
+     */
+    public function nextAction(){
+        /** @var User $user */
+        $user = $this->userRepository->findOneBy(["move"=>true]);
+        return new JsonResponse(["id"=>$user->getId()]);
     }
 
 }

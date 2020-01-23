@@ -102,6 +102,12 @@ class GameController extends AppController
 
     /**
      * @Route("/move/{id}/{X}/{Y}", requirements={"id":"\d+", "X":"\d+", "Y":"\d+"})
+     * @param User $id
+     * @param int $X
+     * @param int $Y
+     * @return JsonResponse
+     * @throws \Doctrine\ORM\ORMException
+     * @throws \Doctrine\ORM\OptimisticLockException
      */
     public function moveAction(User $id, int $X, int $Y ){
         $actions = new Actions($id);
@@ -109,7 +115,7 @@ class GameController extends AppController
 
         $this->em->persist($actions);
         $this->em->flush();
-        return new JsonResponse([["id"=>$id], ["X"=>$X], ["Y"=>$Y]]);
+        return new JsonResponse([["id"=>$id->getId()], ["X"=>$X], ["Y"=>$Y]]);
     }
 
     /**
@@ -142,6 +148,23 @@ class GameController extends AppController
 
         $this->em->flush();
         return new JsonResponse($array);
+    }
+
+    /**
+     * @Route("/clear")
+     */
+    public function clearAction(){
+        $hero = $this->userRepository->find(1);
+        $master = $this->userRepository->find(2);
+
+        $hero->setIsActive(0);
+        $master->setIsActive(0);
+
+        $this->em->persist($hero);
+        $this->em->persist($master);
+        $this->em->flush();
+
+        return new Response("true");
     }
 
 }

@@ -4,6 +4,7 @@
 namespace App\Controller;
 
 
+use App\Entity\Actions;
 use App\Entity\Board;
 use App\Entity\Mobs;
 use App\Entity\User;
@@ -91,35 +92,56 @@ class GameController extends AppController
     }
 
     /**
-     * @Route("/user")
+     * @Route("/hero")
      */
-    public function userAction()
+    public function heroAction()
     {
-
-        $user = new User($this->heroClassRepository->findOneBy(["id"=>2]), false, "hero".time());
-        $mob1 = new User($this->heroClassRepository->findOneBy(["id"=>4]), false, "pig".time());
-        $mob2 = new User($this->heroClassRepository->findOneBy(["id"=>5]), false, "skeleton".time());
-        $mob3 = new User($this->heroClassRepository->findOneBy(["id"=>6]), false, "orc".time());
-
-        $this->em->persist($user);
-        $this->em->persist($mob1);
-        $this->em->persist($mob3);
-        $this->em->persist($mob2);
-        $this->em->flush();
-
-        $mobs = new Mobs();
-        $mobs->addHuman($user);
-        $mobs->addDarkMaster($mob1);
-        $mobs->addDarkMaster($mob2);
-        $mobs->addDarkMaster($mob3);
-
-        return new Response($this->Serialize($mobs, "json"));
+        $users = $this->userRepository->findCharacters();
+        return new Response($this->Serialize($users, "json"));
     }
 
     /**
      * @Route("/move/{id}/{X}/{Y}", requirements={"id":"\d+", "X":"\d+", "Y":"\d+"})
      */
-    public function moveAction(int $id, int $X, int $Y ){
+    public function moveAction(User $id, int $X, int $Y ){
+        $actions = new Actions($id);
+        $actions->setPosition("{$X};{$Y}");
+
+        $this->em->persist($actions);
+        $this->em->flush();
         return new JsonResponse([["id"=>$id], ["X"=>$X], ["Y"=>$Y]]);
     }
+
+    /**
+     * @Route("/user")
+     */
+    public function userAction(){
+        $hero = $this->userRepository->find(1);
+        $master = $this->userRepository->find(2);
+
+        if(!$hero->isActive()){
+            $array = [
+              "id" => 1
+            ];
+            $hero->setIsActive(true);
+        }
+        else if (!$master->isActive()){
+            $array = [
+                "id"=> 2
+            ];
+            $master->setIsActive(true);
+        }
+        else{
+            $array = [
+                "id"=>0
+            ];
+        }
+
+        $this->em->persist($hero);
+        $this->em->persist($master);
+
+        $this->em->flush();
+        return new JsonResponse($array);
+    }
+
 }

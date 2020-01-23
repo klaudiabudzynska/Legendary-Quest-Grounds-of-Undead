@@ -6,6 +6,13 @@ export class Vector {
     this.x = x;
     this.y = y;
   }
+
+  distance(vectB, weight){
+    return Math.sqrt( 
+      Math.pow( this.x - vectB.x, 2 ) + 
+      Math.pow( this.y - vectB.y, 2 )
+      ) * weight;
+  }
 }
 
 export class Matrix {

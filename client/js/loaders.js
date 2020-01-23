@@ -60,4 +60,9 @@ export function playerLoader() {
     .then(res => res.json());
 }
 
+export function charactersLoader(){
+  return fetch("https://localhost:8000/game/hero")
+    .then(res => res.json());
+}
+
 

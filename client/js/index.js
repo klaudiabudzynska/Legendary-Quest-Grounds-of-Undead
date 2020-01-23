@@ -1,4 +1,4 @@
-import { levelLoader, playerLoader } from './loaders.js';
+import { levelLoader, playerLoader, charactersLoader } from './loaders.js';
 import Timer from './Timer.js';
 import { createHuman } from './characters.js';
 import MouseDetector from './MouseDetector.js';
@@ -10,14 +10,16 @@ const ctx = canvas.getContext('2d');
 Promise.all([
   levelLoader(),
   playerLoader(),
+  charactersLoader(),
   createHuman(),
 ])
 .then(([
   level,
   playerData,
+  characters,
   human, 
 ]) => {
-  console.log(playerData);
+  console.log(playerData, characters);
   human.pos.set(1,1);
   human.dest.set(1,1);
 

@@ -37,14 +37,14 @@ class User
     private $move;
 
     /**
-     * @var integer
+     * @var int
      * @ORM\Column(name="owner_id")
      */
     private $owner_id;
 
     /**
-     * @var boolean
-     * @ORM\Column(name="is_active")
+     * @var bool
+     * @ORM\Column(name="is_active", type="boolean")
      */
     private $isActive;
 

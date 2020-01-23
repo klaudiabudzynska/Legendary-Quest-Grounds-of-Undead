@@ -157,8 +157,8 @@ class GameController extends AppController
         $hero = $this->userRepository->find(1);
         $master = $this->userRepository->find(2);
 
-        $hero->setIsActive(0);
-        $master->setIsActive(0);
+        $hero->setIsActive(false);
+        $master->setIsActive(false);
 
         $this->em->persist($hero);
         $this->em->persist($master);

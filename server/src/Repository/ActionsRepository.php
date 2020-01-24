@@ -24,7 +24,8 @@ class ActionsRepository extends ServiceEntityRepository
      */
     public function findLast()
     {
-        return $this->findBy([], ["id"=>'DESC'], 1);
+        return $this->findBy(["attack_mob_id"=>null], ["id"=>'DESC'], 1);
     }
+
 
 }

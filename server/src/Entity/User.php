@@ -49,6 +49,50 @@ class User
     private $isActive;
 
     /**
+     * @var int
+     * @ORM\Column(name="health")
+     */
+    private $health;
+
+    /**
+     * @var int
+     * @ORM\Column(name="strength")
+     */
+    private $strength;
+
+    /**
+     * @return int
+     */
+    public function getStrength(): int
+    {
+        return $this->strength;
+    }
+
+    /**
+     * @param int $strength
+     */
+    public function setStrength(int $strength): void
+    {
+        $this->strength = $strength;
+    }
+
+    /**
+     * @return int
+     */
+    public function getHealth(): int
+    {
+        return $this->health;
+    }
+
+    /**
+     * @param int $health
+     */
+    public function setHealth(int $health): void
+    {
+        $this->health = $health;
+    }
+
+    /**
      * @return HeroClass
      */
     public function getClass(): HeroClass

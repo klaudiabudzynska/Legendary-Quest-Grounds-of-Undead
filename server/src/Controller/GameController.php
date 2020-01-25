@@ -68,7 +68,8 @@ class GameController extends AppController
     /**
      * @Route("/test", name="game_test")
      */
-    public function indexAction(Request $request){
+    public function indexAction(Request $request)
+    {
         [$json, $tab] = $this->gameService->boardGenerate();
         return new Response($this->Serialize($json, "json"));
         //return new Response("<style>*{font-family: monospace;}</style>".$this->gameService->displayBoard($tab));
@@ -77,9 +78,10 @@ class GameController extends AppController
     /**
      * @Route("/map", name="game_map")
      */
-    public function mapAction(){
+    public function mapAction()
+    {
 
-        if(count($this->boardRepository->findAll()) == 0){
+        if (count($this->boardRepository->findAll()) == 0) {
             [$json, $tab] = $this->gameService->boardGenerate();
             $map = new Board();
             $map->setJson($this->Serialize($json, 'json'));
@@ -87,14 +89,13 @@ class GameController extends AppController
 
             $this->em->persist($map);
             $this->em->flush();
-        }
-        else{
+        } else {
             $json = $this->boardRepository->last()->getJson();
             return new Response($json);
         }
 
 
-        return new Response($this->Serialize($json , "json"));
+        return new Response($this->Serialize($json, "json"));
     }
 
     /**
@@ -115,37 +116,37 @@ class GameController extends AppController
      * @throws \Doctrine\ORM\ORMException
      * @throws \Doctrine\ORM\OptimisticLockException
      */
-    public function moveAction(User $id, int $X, int $Y ){
+    public function moveAction(User $id, int $X, int $Y)
+    {
         $actions = new Actions($id);
         $actions->setPosition("{$X};{$Y}");
 
         $this->em->persist($actions);
         $this->em->flush();
-        return new JsonResponse([["id"=>$id->getId()], ["X"=>$X], ["Y"=>$Y]]);
+        return new JsonResponse([["id" => $id->getId()], ["X" => $X], ["Y" => $Y]]);
     }
 
     /**
      * @Route("/user")
      */
-    public function userAction(){
+    public function userAction()
+    {
         $hero = $this->userRepository->find(1);
         $master = $this->userRepository->find(2);
 
-        if(!$hero->isActive()){
+        if (!$hero->isActive()) {
             $array = [
-              "id" => 1
+                "id" => 1
             ];
             $hero->setIsActive(true);
-        }
-        else if (!$master->isActive()){
+        } else if (!$master->isActive()) {
             $array = [
-                "id"=> 2
+                "id" => 2
             ];
             $master->setIsActive(true);
-        }
-        else{
+        } else {
             $array = [
-                "id"=>0
+                "id" => 0
             ];
         }
 
@@ -159,7 +160,8 @@ class GameController extends AppController
     /**
      * @Route("/clear")
      */
-    public function clearAction(){
+    public function clearAction()
+    {
         $hero = $this->userRepository->find(1);
         $master = $this->userRepository->find(2);
 
@@ -169,16 +171,70 @@ class GameController extends AppController
         $this->em->persist($hero);
         $this->em->persist($master);
         $this->em->flush();
-
         return new Response("true");
     }
 
     /**
      * @Route("/last")
      */
-    public function lastAction(){
+    public function lastAction()
+    {
         $last = $this->actionRepository->findLast();
         return new Response($this->Serialize($last, "json"));
     }
 
+    /**
+     * @Route("/end/{id}", requirements={"id":"\d+"})
+     * @param User $id
+     * @return Response
+     * @throws \Doctrine\ORM\ORMException
+     * @throws \Doctrine\ORM\OptimisticLockException
+     */
+    public function endAction(User $id): Response
+    {
+        $hero = $this->userRepository->find(1);
+        $master = $this->userRepository->find(2);
+
+        $hero->setMove($id->getId() == 1 ? false : true);
+        $master->setMove($id->getId() == 2 ? false : true);
+
+        $this->em->persist($hero);
+        $this->em->persist($master);
+        $this->em->flush();
+        return new Response("true");
+
+    }
+
+    /**
+     * @Route("/next")
+     */
+    public function nextAction():Response
+    {
+        /** @var User $user */
+        $user = $this->userRepository->findOneBy(["move" => true]);
+        $mobs = $this->userRepository->findBy(["owner_id" => $user->getId()]);
+        return new Response($this->Serialize(["id" => $user->getId(), "mobs"=>$mobs], "json"));
+    }
+
+    /**
+     * @Route("/attack/{id1}/{id2}", requirements={"id1":"\d+", "id2":"\d+"})
+     * @param User $id1
+     * @param User $id2
+     */
+    public function attackAction(User $id1, User $id2)
+    {
+        $attack2 = $id2->getStrength();
+        $attack1 = $id1->getStrength();
+        $h1 = $id1->getHealth();
+        $h2 = $id2->getHealth();
+
+        $new_health1 = $h1 - $attack2;
+        $new_health2 = $h2 - $attack1;
+        $id1->setHealth($new_health1);
+        $id2->setHealth($new_health2);
+        $this->em->persist($id1);
+        $this->em->persist($id2);
+        $this->em->flush();
+        return new Response("true");
+    }
 }

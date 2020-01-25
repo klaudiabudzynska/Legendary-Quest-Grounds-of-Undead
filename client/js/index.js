@@ -30,29 +30,35 @@ Promise.all([
   const player = new Player(playerData.id);
   console.log(playerData, characters);
 
-  player.init(characters.filter(character => character.ownerId === playerData.id))
-
-  console.log(player.characters);
-
   human.pos.set(1,1);
+  human.setup(1, 3);
+
   pig.pos.set(21, 1);
+  pig.setup(2, 4);
+
   skeleton.pos.set(21, 21);
+  skeleton.setup(2, 5);
+
   troll.pos.set(1, 21);
+  troll.setup(2, 6);
 
-  level.characters.add(human);
-  level.characters.add(pig);
-  level.characters.add(skeleton);
-  level.characters.add(troll);
+  player.init([human, pig, skeleton, troll].filter(character => character.owner === player.id));
 
-  player.moveCharacter(human, human.pos);
-  player.moveCharacter(pig, pig.pos);
-  player.moveCharacter(skeleton, skeleton.pos);
-  player.moveCharacter(troll, troll.pos);
+  [human, pig, skeleton, troll].forEach(character => {
+    console.log(character);
+    level.characters.add(character);
+    character.walk.start(character.pos);
+  });
 
+  // if(player.id === 1){
+    player.turn();
+  // }
   
   const input = new MouseDetector();
   input.listen(canvas, (pos) => {
-    player.moveCharacter(human, pos);
+    if(player.canPlay){
+      player.moveCharacter(pos);
+    }
   });
 
   const timer = new Timer();

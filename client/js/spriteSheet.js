@@ -19,7 +19,6 @@ export function loadBackground(){
 }
 
 export function loadCharacter(name){
-  console.log(name);
   return imageLoader(`../img/${name}/${name}.png`)
   .then( img => {
     console.log('Character loaded', img);

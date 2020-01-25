@@ -1,6 +1,6 @@
-export function sendPosition(url) {
+export function send(url) {
   let xhr = new XMLHttpRequest;
-  xhr.open('GET', url);
+  xhr.open('GET', `https://localhost:8000/${url}`);
   xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
 
   xhr.send();

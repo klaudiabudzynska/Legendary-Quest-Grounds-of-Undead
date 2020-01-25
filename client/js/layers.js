@@ -32,6 +32,7 @@ export function createPathLayer(characters) {
       ctx.moveTo(character.pos.x * 32 + 16, character.pos.y * 32 + 16);
       ctx.lineTo(character.dest.x * 32 + 16, character.dest.y * 32 + 16);
       ctx.stroke();
+      ctx.closePath();
     })
   }
 }

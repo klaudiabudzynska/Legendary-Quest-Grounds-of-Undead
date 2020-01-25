@@ -5,3 +5,8 @@ export function sendPosition(url) {
 
   xhr.send();
 }
+
+export async function getLastPosition() {
+   return await fetch("https://localhost:8000/game/last")
+    .then(res => res.json());
+}

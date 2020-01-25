@@ -16,7 +16,7 @@ export default class Player {
   moveCharacter(character, dest){
     this.currentCharacter = character;
     character.dest.set(dest.x, dest.y);
-    sendPosition(`https://localhost:8000/game/move/123/${dest.x}/${dest.y}`);
+    sendPosition(`https://localhost:8000/game/move/${this.id}/${dest.x}/${dest.y}`);
     console.log(dest);
     character.walk.start(character.dest);
   }

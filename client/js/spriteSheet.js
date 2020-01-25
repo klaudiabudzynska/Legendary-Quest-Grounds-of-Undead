@@ -18,8 +18,9 @@ export function loadBackground(){
   })
 }
 
-export function loadHuman(){
-  return imageLoader('../img/Human/human_regular_hair.png')
+export function loadCharacter(name){
+  console.log(name);
+  return imageLoader(`../img/${name}/${name}.png`)
   .then( img => {
     console.log('Character loaded', img);
     const human = new Sprites(img, 20);

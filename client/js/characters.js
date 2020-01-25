@@ -1,21 +1,21 @@
 import Character from './Character.js';
 import Walk from './movements/Walk.js';
 import Velocity from './movements/Velocity.js';
-import { loadHuman } from './spriteSheet.js';
+import { loadCharacter } from './spriteSheet.js';
 
-export function createHuman() {
-  return loadHuman()
-  .then(humanSprite =>{
-    const human = new Character;
+export function createCharacter(name) {
+  return loadCharacter(name)
+  .then(characterSprite =>{
+    const character = new Character;
 
-    human.draw = function drawHuman(ctx){
-      humanSprite.draw('idle', ctx, this.pos.x, this.pos.y);
+    character.draw = function drawCharacter(ctx){
+      characterSprite.draw('idle', ctx, this.pos.x, this.pos.y);
     }
   
-    human.addMovement(new Velocity);
-    human.addMovement(new Walk);
-    human.range = 2;
+    character.addMovement(new Velocity);
+    character.addMovement(new Walk);
+    character.range = 3;
     
-    return human;
+    return character;
   })
 }

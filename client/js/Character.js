@@ -16,6 +16,7 @@ export default class Character {
     this.dest = new Vector(0, 0);
     this.vel = new Vector(0, 0);
     this.range;
+    this.owner;
 
     this.movements = [];
   }
@@ -24,8 +25,6 @@ export default class Character {
     this.movements.push(movement);
     this[movement.name] = movement;
   }
-
-  
 
   update(deltaTime) {
     this.movements.forEach(movement => {

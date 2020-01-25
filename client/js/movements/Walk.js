@@ -24,8 +24,8 @@ export default class Walk extends Movement {
         if ((this.dest.x !== character.pos.x || 
             this.dest.y !== character.pos.y) && 
             this.canMove(character.pos, this.dest, character)) {
-            const path = this.astar(character.pos, this.dest);
-            console.log(path);
+            //const path = this.astar(character.pos, this.dest);
+            //console.log(path);
             character.pos.x = this.dest.x;
             character.pos.y = this.dest.y;
         }
@@ -49,7 +49,7 @@ export default class Walk extends Movement {
             //tablica na kolejną iterację 
             openSet.push([]);
             openSet[i].forEach((currentPath, j) => {
-                console.log(currentPath);
+                console.log('current path', openSet[i][j])
                 let neighbours = this.neighbours(currentPath[currentPath.length - 1])
                 neighbours.forEach(neighbour => {
                     //tablica na ścieżki z kontynuacją ściezki z poprzedniej iteracji

@@ -1,14 +1,16 @@
 import { send, get } from './requests.js'
 import Timer from './Timer.js';
+import { Vector } from './math.js';
 
 export default class Player {
   constructor(id){
     this.id = id;
     this.characters = [];
+    this.enemyCharacters = [];
     this.currentCharacter;
     this.canPlay = false;
     this.whoseTurn;
-    this.requests = new Timer(2);
+    this.requests = new Timer(5);
   }
 
   init(characters, startPlayer){
@@ -25,6 +27,12 @@ export default class Player {
     }
   }
 
+  enemyInit(characters){
+    characters.forEach(character => {
+      this.enemyCharacters.push(character);
+    })
+  }
+
   playerTurn(){
     this.currentCharacter = this.characters[0];
     console.log(this.characters[0]);
@@ -32,7 +40,15 @@ export default class Player {
   }
 
   enemyTurn(){
-    get('game/last').then(res => console.log(res));
+    get('game/last').then(res => {
+      console.log("ruch wykonał", res[0].user);
+
+      const coords = res[0].position.split(';');
+      const move = new Vector(coords[0], coords[1]);
+
+      this.moveEnemy(res[0].user, move);
+
+    });
     get('game/next').then(res => {console.log(res); this.whoseTurn = res.id});
   }
 
@@ -54,12 +70,18 @@ export default class Player {
     }
   }
 
+  moveEnemy(id, dest){
+    const character = this.enemyCharacters.filter(character => id === character.id)[0];
+    character.walk.start(dest);
+  }
+
   timer(){
     this.requests.update = (deltaTime) => {
       this.enemyTurn();
+      console.log("whose turn", this.whoseTurn);
       if(this.whoseTurn === this.id){
-        this.requests.stop(); 
-        this.playerTurn()     
+        this.playerTurn();
+        this.requests.stop();
       }
     }
     this.requests.start();

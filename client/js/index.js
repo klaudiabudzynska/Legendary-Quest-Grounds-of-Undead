@@ -50,6 +50,10 @@ Promise.all([
     startPlayer
   );
 
+  player.enemyInit(
+    [human, pig, skeleton, troll].filter(character => character.owner !== player.id)
+  );
+
   [human, pig, skeleton, troll].forEach(character => {
     console.log(character);
     level.characters.add(character);

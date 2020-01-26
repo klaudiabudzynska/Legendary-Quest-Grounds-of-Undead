@@ -1,9 +1,9 @@
 import { levelLoader, playerLoader, charactersLoader } from './loaders.js';
+import { get } from './requests.js'
 import Timer from './Timer.js';
 import { createCharacter } from './characters.js';
 import MouseDetector from './MouseDetector.js';
 import Player from './Player.js';
-import { getLastPosition } from './requests.js';
 
 
 const canvas = document.getElementById('canvas');
@@ -17,6 +17,7 @@ Promise.all([
   createCharacter('pig'),
   createCharacter('skeleton'),
   createCharacter('troll'),
+  get('game/next').then(res => res.id),
 ])
 .then(([
   level,
@@ -26,6 +27,7 @@ Promise.all([
   pig,
   skeleton,
   troll,
+  startPlayer,
 ]) => {
   const player = new Player(playerData.id);
   console.log(playerData, characters);
@@ -42,7 +44,11 @@ Promise.all([
   troll.pos.set(1, 21);
   troll.setup(2, 6);
 
-  player.init([human, pig, skeleton, troll].filter(character => character.owner === player.id));
+
+  player.init(
+    [human, pig, skeleton, troll].filter(character => character.owner === player.id),
+    startPlayer
+  );
 
   [human, pig, skeleton, troll].forEach(character => {
     console.log(character);
@@ -50,10 +56,6 @@ Promise.all([
     character.walk.start(character.pos);
   });
 
-  // if(player.id === 1){
-    player.turn();
-  // }
-  
   const input = new MouseDetector();
   input.listen(canvas, (pos) => {
     if(player.canPlay){
@@ -67,12 +69,5 @@ Promise.all([
     level.update(deltaTime);
   }
 
-  const requests = new Timer(1);
-  requests.update = function update(){
-    // getLastPosition().then(res => console.log(res));
-  }
-
   timer.start();
-  requests.start();
-
 })

@@ -24,4 +24,8 @@ export default class Timer {
   start(){
     this.enqueue();
   }
+
+  stop(){
+    cancelAnimationFrame(this.updateProxy);
+  }
 }

@@ -3,6 +3,7 @@ import { createBackgroundLayer, createCharacterLayer, createPathLayer } from './
 import { loadBackground } from './spriteSheet.js';
 
 const LEVEL = new Level;
+const IP = 'http://192.168.43.56/';
 
 function createMapTiles(level, backgrounds){
   backgrounds.forEach(background => {
@@ -30,7 +31,7 @@ export function imageLoader(url) {
 
 export function levelLoader() {
   return Promise.all([
-    fetch('https://localhost:8000/game/map')
+    fetch(`https://${IP}:8000/game/map`)
     .then(res => res.json()),
     loadBackground()
   ]).then(([levelSpec, background]) => {
@@ -56,12 +57,12 @@ export function getTilesMatrix() {
 }
 
 export function playerLoader() {
-  return fetch("https://localhost:8000/game/user")
+  return fetch(`https://${IP}:8000/game/user`)
     .then(res => res.json());
 }
 
 export function charactersLoader(){
-  return fetch("https://localhost:8000/game/hero")
+  return fetch(`https://${IP}:8000/game/hero`)
     .then(res => res.json());
 }
 

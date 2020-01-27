@@ -10,7 +10,7 @@ export default class Player {
     this.currentCharacter;
     this.canPlay = false;
     this.whoseTurn;
-    this.requests = new Timer(5);
+    this.requests = new Timer(2);
     this.theEnd = new Vector(9, 13);
   }
 

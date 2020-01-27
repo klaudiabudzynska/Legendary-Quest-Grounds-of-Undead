@@ -32,7 +32,7 @@ Promise.all([
   const player = new Player(playerData.id);
   console.log(playerData, characters);
 
-  human.pos.set(8,13);
+  human.pos.set(1,1);
   human.setup(1, 3);
 
   pig.pos.set(21, 1);

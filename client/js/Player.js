@@ -11,6 +11,7 @@ export default class Player {
     this.canPlay = false;
     this.whoseTurn;
     this.requests = new Timer(5);
+    this.theEnd = new Vector(9, 13);
   }
 
   init(characters, startPlayer){
@@ -58,6 +59,11 @@ export default class Player {
     send(`game/move/${this.currentCharacter.id}/${dest.x}/${dest.y}`);
 
     this.currentCharacter.walk.start(dest);
+
+    console.log(dest);
+    if(dest === this.theEnd){
+      console.log('%c the end ', 'background: green; color: #fff');
+    }
     
     if(this.characters.indexOf(this.currentCharacter) < this.characters.length - 1){
       this.currentCharacter = this.characters[this.characters.indexOf(this.currentCharacter) + 1];
@@ -85,6 +91,5 @@ export default class Player {
       }
     }
     this.requests.start();
-    
   }
 }
